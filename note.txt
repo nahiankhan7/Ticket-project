@@ -1,0 +1,51 @@
+// Get DOM elements
+const firstClassInput = document.getElementById("firstClass");
+const economyInput = document.getElementById("economy");
+
+const subtotalElement = document.getElementById("subtotal");
+const vatElement = document.getElementById("vat");
+const totalElement = document.getElementById("total");
+
+const FIRST_CLASS_PRICE = 150;
+const ECONOMY_PRICE = 100;
+const VAT_RATE = 0.1;
+
+// Update values for first class tickets
+function updateFirstClassCount(increment) {
+    let firstClassCount = parseInt(firstClassInput?.value) || 0;
+    firstClassCount = increment ? firstClassCount + 1 : Math.max(firstClassCount - 1, 0);
+    firstClassInput.value = firstClassCount;
+    updateSubtotal();
+    calculateTotal();
+}
+
+// Update values for economy class tickets
+function updateEconomyCount(increment) {
+    let economyCount = parseInt(economyInput?.value) || 0;
+    economyCount = increment ? economyCount + 1 : Math.max(economyCount - 1, 0);
+    economyInput.value = economyCount;
+    updateSubtotal();
+    calculateTotal();
+}
+
+// Update subtotal based on current values
+function updateSubtotal() {
+    const firstClassCount = parseInt(firstClassInput.value) || 0;
+    const economyCount = parseInt(economyInput.value) || 0;
+    const subtotal = (firstClassCount * FIRST_CLASS_PRICE) + (economyCount * ECONOMY_PRICE);
+    subtotalElement.innerText = subtotal.toFixed(2);
+}
+
+// Calculate and update the total amount including VAT
+function calculateTotal() {
+    const subtotal = parseFloat(subtotalElement.innerText);
+    const vatAmount = subtotal * VAT_RATE;
+    vatElement.innerText = vatAmount.toFixed(2);
+    const total = subtotal + vatAmount;
+    totalElement.innerText = total.toFixed(2);
+}
+
+// Function to handle booking confirmation
+function bookNow() {
+    alert("Booking confirmed!");
+}
